@@ -1,73 +1,85 @@
-# Welcome to your Lovable project
+# Insight Hub (DocuMind)
 
-## Project info
+Insight Hub is a full-stack document intelligence app. Upload research documents, extract metadata, build a searchable vector index, visualize keyword trends, and ask questions with AI-backed answers. The system pairs a React dashboard with a FastAPI backend, Firebase for auth/storage/metadata, and a local FAISS index for retrieval.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**What’s Inside**
+- `frontend`: Vite + React + TypeScript UI with Firebase Auth and a dashboard for uploads, metadata, charts, and Q&A.
+- `backend`: FastAPI API with document processing, embeddings, FAISS vector search, and RAG Q&A.
 
-## How can I edit this code?
+**Core Features**
+- Secure document uploads tied to Firebase Auth users.
+- Background processing pipeline for PDF/DOCX, OCR for images, and table extraction.
+- Automatic metadata (pages, chunks, year, company names).
+- Keyword frequency and mentions over time charts.
+- RAG Q&A with evidence snippets and page references.
 
-There are several ways of editing your application.
+**Tech Stack**
+- Frontend: Vite, React, TypeScript, Tailwind, shadcn-ui, Framer Motion, Firebase Web SDK.
+- Backend: FastAPI, Firestore/Storage (firebase-admin), FAISS, sentence-transformers, PyMuPDF, pdfplumber, pytesseract.
 
-**Use Lovable**
+**Prerequisites**
+- Node.js 18+ and npm
+- Python 3.10+ (recommended)
+- Firebase project with Auth, Firestore, and Storage enabled
+- Groq API key for AI answers
+- Tesseract installed and available on PATH
+- Poppler installed for `pdf2image` (PDF OCR fallback)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+**Quick Start**
+1. Backend setup
+```powershell
+cd insight-hub\backend
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-Changes made via Lovable will be committed automatically to this repo.
+Create `insight-hub\backend\.env` (or update the existing one) with:
+```env
+GROQ_API_KEY=your_groq_api_key
+FIREBASE_SERVICE_ACCOUNT=path\to\firebase_service_account.json
+FIREBASE_STORAGE_BUCKET=your-project-id.appspot.com
+```
 
-**Use your preferred IDE**
+Run the API:
+```powershell
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. Frontend setup
+```powershell
+cd insight-hub\frontend
+npm install
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Create `insight-hub\frontend\.env` (or update the existing one) with:
+```env
+VITE_FIREBASE_API_KEY=...
+VITE_FIREBASE_AUTH_DOMAIN=...
+VITE_FIREBASE_PROJECT_ID=...
+VITE_FIREBASE_STORAGE_BUCKET=...
+VITE_FIREBASE_MESSAGING_SENDER_ID=...
+VITE_FIREBASE_APP_ID=...
+VITE_FIREBASE_MEASUREMENT_ID=...
+VITE_API_BASE_URL=http://localhost:8000
+```
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Start the UI:
+```powershell
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Then visit `http://localhost:8080`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+**Project Structure**
+- `backend/app/api`: REST endpoints (`/documents`, `/metadata`, `/charts`, `/qa`, `/debug`)
+- `backend/app/processing`: extraction + OCR + chunking pipeline
+- `backend/app/vector_store`: FAISS index and metadata persistence
+- `backend/app/ai`: embeddings and Groq client
+- `frontend/src/pages`: Landing, Auth, Dashboard
+- `frontend/src/components`: dashboard widgets (upload, charts, QA)
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**Notes**
+- The backend stores the FAISS index in `backend/app/vector_store/faiss.index` and metadata in `faiss_meta.json`.
+- The document list and metadata are read from Firestore collections `documents` and `chunks`.
+- For local development, CORS is configured for `http://localhost:8080`.

@@ -1,24 +1,30 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Node
+node_modules/
+dist/
+dist-ssr/
 
-node_modules
-dist
-dist-ssr
-*.local
+# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Env files
+.env
+.env.*
+!.env.example
+
+# Firebase/service credentials
+firebase_service_account.json
+
+# App data
+backend/uploads/
+backend/metadata/
+backend/app/vector_store/faiss.index
+backend/app/vector_store/faiss_meta.json
+
+# OS/editor
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+.vscode/
+.idea/

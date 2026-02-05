@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+firebase-admin
+python-multipart
+pymupdf
+pytesseract
+Pillow
+sentence-transformers
+faiss-cpu
+requests
+python-dotenv
+python-docx
+pdf2image
+pdfplumber

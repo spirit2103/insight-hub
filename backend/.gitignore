@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual env
+venv/
+
+# Env and credentials
+.env
+firebase_service_account.json
+
+# Local data
+uploads/
+metadata/
+app/vector_store/faiss.index
+app/vector_store/faiss_meta.json

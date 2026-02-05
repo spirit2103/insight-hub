@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "documind-afda9",
+    "DocuMind": "documind-afda9",
+    "documind": "intellibiz-agent"
+  },
+  "targets": {},
+  "etags": {}
+}
